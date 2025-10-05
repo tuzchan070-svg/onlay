@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuumich - Tienda Online</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1920&q=80') center/cover fixed;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .brand-name {
+            font-size: 32px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            transition: transform 0.3s;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            transform: scale(1.1);
+        }
+
+        .social-facebook { background: #3b5998; }
+        .social-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .social-whatsapp { background: #25d366; }
+        .social-tiktok { background: #000000; }
+
+        .cart-icon {
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.05);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .hero {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            animation: fadeIn 1s;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+
+        .promotions-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            animation: slideUp 0.5s;
+        }
+
+        .promotions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .promotions-header h2 {
+            color: #333;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .promo-icon {
+            color: #ff4757;
+            font-size: 32px;
+        }
+
+        .promotions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .promo-card {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(255, 75, 87, 0.3);
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-30px, -30px); }
+        }
+
+        .promo-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .promo-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .promo-description {
+            font-size: 16px;
+            opacity: 0.95;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .promo-badge {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .gift-box-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            animation: slideUp 0.5s;
+        }
+
+        .gift-box-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .gift-box-header h2 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .gift-icon {
+            color: #c44569;
+            font-size: 32px;
+        }
+
+        .season-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .gift-boxes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .gift-box-card {
+            background: white;
+            border: 2px solid #c44569;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .gift-box-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(196, 69, 105, 0.3);
+        }
+
+        .gift-box-image {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .gift-box-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .gift-box-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .gift-box-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #c44569;
+            margin-bottom: 15px;
+        }
+
+        .seasonal-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ffd700;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: slideUp 0.5s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .add-to-cart:hover {
+            transform: scale(1.02);
+        }
+
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s;
+        }
+
+        .cart-content {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .cart-header h2 {
+            color: #333;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .cart-item-price {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .quantity-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            background: #667eea;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .remove-item {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-align: right;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            background: #25d366;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform 0.2s;
+        }
+
+        .checkout-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .checkout-form {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group input.error {
+            border-color: #ff4757;
+        }
+
+        .error-message {
+            color: #ff4757;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .promo-code-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .promo-code-question {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .promo-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .promo-btn {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .promo-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .promo-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .promo-code-input {
+            display: none;
+            animation: slideDown 0.3s;
+        }
+
+        .promo-code-input.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .discount-applied {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            .brand-name {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">Y</div>
+                <div class="brand-name">YUUMICH</div>
+            </div>
+            <div class="social-links">
+                <a href="https://web.facebook.com/YUUMALUX" target="_blank" class="social-facebook" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://instagram.com" target="_blank" class="social-instagram" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://wa.me/529831253262" target="_blank" class="social-whatsapp" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://tiktok.com" target="_blank" class="social-tiktok" title="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+            <button class="cart-icon" onclick="toggleCart()">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Bienvenido a Yuumich</h1>
+            <p>Descubre nuestros productos exclusivos</p>
+        </div>
+
+        <!-- Sección de Promociones -->
+        <div class="promotions-section">
+            <div class="promotions-header">
+                <h2><i class="fas fa-tags promo-icon"></i> Promociones Especiales</h2>
+            </div>
+            <div class="promotions-grid">
+                <div class="promo-card">
+                    <div class="promo-title">¡2x1 en Productos Seleccionados!</div>
+                    <div class="promo-description">Lleva dos productos al precio de uno. Oferta válida hasta fin de mes.</div>
+                    <span class="promo-badge">OFERTA LIMITADA</span>
+                </div>
+                <div class="promo-card">
+                    <div class="promo-title">20% de Descuento</div>
+                    <div class="promo-description">En tu primera compra. Usa el código: YUUMICH20</div>
+                    <span class="promo-badge">NUEVO CLIENTE</span>
+                </div>
+                <div class="promo-card">
+                    <div class="promo-title">Envío Gratis</div>
+                    <div class="promo-description">En compras superiores a $500. Aplica automáticamente.</div>
+                    <span class="promo-badge">SIN MÍNIMO</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Cajas de Regalo por Temporada -->
+        <div class="gift-box-section">
+            <div class="gift-box-header">
+                <h2><i class="fas fa-gift gift-icon"></i> Cajas de Regalo Temporada</h2>
+                <span class="season-badge">🎄 TEMPORADA NAVIDEÑA 2025</span>
+            </div>
+            <div class="gift-boxes-grid">
+                <div class="gift-box-card">
+                    <span class="seasonal-tag">⭐ EXCLUSIVO</span>
+                    <div class="gift-box-image">🎁</div>
+                    <div class="gift-box-title">Caja Premium</div>
+                    <div class="gift-box-description">Incluye 3 productos seleccionados + tarjeta personalizada + empaque de lujo</div>
+                    <div class="gift-box-price">$899.99</div>
+                    <button class="add-to-cart" onclick="addGiftBox(1)">
+                        <i class="fas fa-cart-plus"></i> Agregar al Carrito
+                    </button>
+                </div>
+                <div class="gift-box-card">
+                    <span class="seasonal-tag">❤️ POPULAR</span>
+                    <div class="gift-box-image">🎀</div>
+                    <div class="gift-box-title">Caja Especial</div>
+                    <div class="gift-box-description">Incluye 2 productos + tarjeta + moño decorativo</div>
+                    <div class="gift-box-price">$599.99</div>
+                    <button class="add-to-cart" onclick="addGiftBox(2)">
+                        <i class="fas fa-cart-plus"></i> Agregar al Carrito
+                    </button>
+                </div>
+                <div class="gift-box-card">
+                    <span class="seasonal-tag">🎉 OFERTA</span>
+                    <div class="gift-box-image">🎊</div>
+                    <div class="gift-box-title">Caja Básica</div>
+                    <div class="gift-box-description">Incluye 1 producto + empaque elegante</div>
+                    <div class="gift-box-price">$349.99</div>
+                    <button class="add-to-cart" onclick="addGiftBox(3)">
+                        <i class="fas fa-cart-plus"></i> Agregar al Carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2><i class="fas fa-shopping-cart"></i> Mi Carrito</h2>
+                <button class="close-cart" onclick="toggleCart()">×</button>
+            </div>
+            <div id="cartItems"></div>
+            <div class="cart-total" id="cartTotal"></div>
+            
+            <div class="checkout-form">
+                <div class="form-group">
+                    <label for="buyerName">Nombre Completo *</label>
+                    <input type="text" id="buyerName" placeholder="Ingresa tu nombre completo" required>
+                    <span class="error-message" id="nameError">Por favor ingresa tu nombre</span>
+                </div>
+
+                <div class="promo-code-section">
+                    <div class="promo-code-question">¿Tienes un código de descuento?</div>
+                    <div class="promo-buttons">
+                        <button class="promo-btn" onclick="showPromoInput()">Sí, tengo código</button>
+                        <button class="promo-btn" onclick="hidePromoInput()">No, continuar</button>
+                    </div>
+                    <div class="promo-code-input" id="promoCodeInput">
+                        <div class="form-group">
+                            <label for="promoCode">Código de Descuento</label>
+                            <input type="text" id="promoCode" placeholder="Ingresa tu código">
+                            <button class="add-to-cart" onclick="applyPromoCode()" style="margin-top: 10px;">
+                                Aplicar Código
+                            </button>
+                        </div>
+                    </div>
+                    <div id="discountMessage"></div>
+                </div>
+            </div>
+
+            <button class="checkout-btn" onclick="checkout()">
+                <i class="fab fa-whatsapp"></i> Proceder al Pago por WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // PRODUCTOS - Puedes cambiar las imágenes por las URLs de tus productos reales
+        const products = [
+            {
+                id: 1,
+                name: "Producto Premium 1",
+                description: "Descripción detallada del producto",
+                price: 299.99,
+                image: "https://drive.google.com/thumbnail?id=1DCM4tcs--F3vJ4iYHsOf09Et1N-BxvZZ&sz=w1000"
+            },
+            {
+                id: 2,
+                name: "Producto Premium 2",
+                description: "Descripción detallada del producto",
+                price: 399.99,
+                image: "https://drive.google.com/thumbnail?id=1EiQpVabmY-7v0jIRTL99_3OsZSWLnhUl&sz=w1000"
+            },
+            {
+                id: 3,
+                name: "Producto Premium 3",
+                description: "Descripción detallada del producto",
+                price: 249.99,
+                image: "https://drive.google.com/thumbnail?id=1jEzZOWQ9WQYeXwYuucRW_KlO4mPxOAv8&sz=w1000"
+            },
+            {
+                id: 4,
+                name: "Producto Premium 4",
+                description: "Descripción detallada del producto",
+                price: 449.99,
+                image: "https://drive.google.com/thumbnail?id=1-ZRyikDiVqs2T1_RDQdxrzVNpEmBXs2e&sz=w1000"
+            },
+            {
+                id: 5,
+                name: "Producto Premium 5",
+                description: "Descripción detallada del producto",
+                price: 349.99,
+                image: "https://drive.google.com/thumbnail?id=1JbVUgyEHfMq7fgUP7j3B6bwufQ23p4sD&sz=w1000"
+            },
+            {
+                id: 6,
+                name: "Producto Premium 6",
+                description: "Descripción detallada del producto",
+                price: 199.99,
+                image: "https://drive.google.com/thumbnail?id=1qcl6XuzVs8ql4W3z03xVKtc9BYp_aH8p&sz=w1000"
+            },
+            {
+                id: 7,
+                name: "Producto Premium 7",
+                description: "Descripción detallada del producto",
+                price: 279.99,
+                image: "https://drive.google.com/thumbnail?id=1amHul9eV6fATV_eHY6BzZzuCLvpDcUXQ&sz=w1000"
+            },
+            {
+                id: 8,
+                name: "Producto Premium 8",
+                description: "Descripción detallada del producto",
+                price: 329.99,
+                image: "https://drive.google.com/thumbnail?id=1NG88oOc5Zxrvp0Zef9AIZKlgTP0cpN6-&sz=w1000"
+            },
+            {
+                id: 9,
+                name: "Producto Premium 9",
+                description: "Descripción detallada del producto",
+                price: 369.99,
+                image: "https://drive.google.com/thumbnail?id=1dOH-eER7xScXbQ1UrCxe1JAezP-73cqK&sz=w1000"
+            },
+            {
+                id: 10,
+                name: "Producto Premium 10",
+                description: "Descripción detallada del producto",
+                price: 419.99,
+                image: "https://drive.google.com/thumbnail?id=1YV8-jKDifuWL5jM-s0nthw-X9pjliLP-&sz=w1000"
+            },
+            {
+                id: 11,
+                name: "Producto Premium 11",
+                description: "Descripción detallada del producto",
+                price: 289.99,
+                image: "https://images.unsplash.com/photo-1598520106830-8c45c2035460?w=400&h=300&fit=crop"
+            },
+            {
+                id: 12,
+                name: "Producto Premium 12",
+                description: "Descripción detallada del producto",
+                price: 359.99,
+                image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400&h=300&fit=crop"
+            },
+            {
+                id: 13,
+                name: "Producto Premium 13",
+                description: "Descripción detallada del producto",
+                price: 309.99,
+                image: "https://images.unsplash.com/photo-1602006276914-01e346bb3cda?w=400&h=300&fit=crop"
+            },
+            {
+                id: 14,
+                name: "Producto Premium 14",
+                description: "Descripción detallada del producto",
+                price: 439.99,
+                image: "https://images.unsplash.com/photo-1547595628-c61a29f496f0?w=400&h=300&fit=crop"
+            }
+        ];
+
+        let cart = [];
+        let discount = 0;
+        let promoCodeApplied = '';
+
+        // Códigos promocionales válidos
+        const promoCodes = {
+            'YUUMICH20': 20,
+            'PRIMERACOMPRA': 15,
+            'NAVIDAD2025': 25,
+            'DESCUENTO10': 10
+        };
+
+        function showPromoInput() {
+            document.getElementById('promoCodeInput').classList.add('show');
+            event.target.classList.add('active');
+            document.querySelectorAll('.promo-btn')[1].classList.remove('active');
+        }
+
+        function hidePromoInput() {
+            document.getElementById('promoCodeInput').classList.remove('show');
+            document.getElementById('promoCode').value = '';
+            document.getElementById('discountMessage').innerHTML = '';
+            discount = 0;
+            promoCodeApplied = '';
+            event.target.classList.add('active');
+            document.querySelectorAll('.promo-btn')[0].classList.remove('active');
+            updateCart();
+        }
+
+        function applyPromoCode() {
+            const code = document.getElementById('promoCode').value.trim().toUpperCase();
+            const messageDiv = document.getElementById('discountMessage');
+            
+            if (!code) {
+                messageDiv.innerHTML = '<div style="color: #ff4757; padding: 10px; text-align: center;">Por favor ingresa un código</div>';
+                return;
+            }
+
+            if (promoCodes[code]) {
+                discount = promoCodes[code];
+                promoCodeApplied = code;
+                messageDiv.innerHTML = `<div class="discount-applied">
+                    ✓ Código aplicado: ${discount}% de descuento
+                </div>`;
+                updateCart();
+            } else {
+                messageDiv.innerHTML = '<div style="color: #ff4757; padding: 10px; text-align: center;">Código inválido</div>';
+                discount = 0;
+                promoCodeApplied = '';
+                updateCart();
+            }
+        }
+
+        // Cajas de regalo por temporada
+        const giftBoxes = {
+            1: {
+                id: 'gift-premium',
+                name: 'Caja de Regalo Premium',
+                description: 'Incluye 3 productos seleccionados + tarjeta personalizada + empaque de lujo',
+                price: 899.99,
+                image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=400&h=300&fit=crop'
+            },
+            2: {
+                id: 'gift-especial',
+                name: 'Caja de Regalo Especial',
+                description: 'Incluye 2 productos + tarjeta + moño decorativo',
+                price: 599.99,
+                image: 'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=400&h=300&fit=crop'
+            },
+            3: {
+                id: 'gift-basica',
+                name: 'Caja de Regalo Básica',
+                description: 'Incluye 1 producto + empaque elegante',
+                price: 349.99,
+                image: 'https://images.unsplash.com/photo-1544937762-4fb71a6891c9?w=400&h=300&fit=crop'
+            }
+        };
+
+        function addGiftBox(giftId) {
+            const giftBox = giftBoxes[giftId];
+            const existingItem = cart.find(item => item.id === giftBox.id);
+            
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...giftBox, quantity: 1 });
+            }
+            
+            updateCart();
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-price">$${product.price.toFixed(2)}</div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">
+                            <i class="fas fa-cart-plus"></i> Agregar al Carrito
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartCount = document.getElementById('cartCount');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            renderCart();
+        }
+
+        function renderCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="empty-cart">Tu carrito está vacío</div>';
+                cartTotal.innerHTML = '';
+                return;
+            }
+            
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${item.price.toFixed(2)}</div>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(${item.id}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="quantity-btn" onclick="changeQuantity(${item.id}, 1)">+</button>
+                    </div>
+                    <button class="remove-item" onclick="removeFromCart(${item.id})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+            
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const discountAmount = (subtotal * discount) / 100;
+            const total = subtotal - discountAmount;
+            
+            let totalHTML = `<div style="text-align: right;">`;
+            totalHTML += `<div style="font-size: 16px; color: #666;">Subtotal: ${subtotal.toFixed(2)}</div>`;
+            
+            if (discount > 0) {
+                totalHTML += `<div style="font-size: 16px; color: #27ae60; margin-top: 5px;">
+                    Descuento (${discount}%): -${discountAmount.toFixed(2)}
+                </div>`;
+            }
+            
+            totalHTML += `<div style="font-size: 24px; font-weight: bold; color: #333; margin-top: 10px;">
+                Total: ${total.toFixed(2)}
+            </div></div>`;
+            
+            cartTotal.innerHTML = totalHTML;
+        }
+
+        function changeQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCart();
+                }
+            }
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío');
+                return;
+            }
+            
+            // Validar nombre del comprador
+            const buyerName = document.getElementById('buyerName').value.trim();
+            const nameError = document.getElementById('nameError');
+            const nameInput = document.getElementById('buyerName');
+            
+            if (!buyerName) {
+                nameInput.classList.add('error');
+                nameError.style.display = 'block';
+                nameInput.focus();
+                return;
+            } else {
+                nameInput.classList.remove('error');
+                nameError.style.display = 'none';
+            }
+            
+            let message = `¡Hola! Soy *${buyerName}* y me gustaría hacer un pedido:%0A%0A`;
+            message += `*PEDIDO:*%0A`;
+            message += `━━━━━━━━━━━━━━━━%0A%0A`;
+            
+            cart.forEach(item => {
+                message += `▫️ *${item.name}*%0A`;
+                message += `   Cantidad: ${item.quantity}%0A`;
+                message += `   Precio unitario: ${item.price.toFixed(2)}%0A`;
+                message += `   Subtotal: ${(item.price * item.quantity).toFixed(2)}%0A%0A`;
+            });
+            
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const discountAmount = (subtotal * discount) / 100;
+            const total = subtotal - discountAmount;
+            
+            message += `━━━━━━━━━━━━━━━━%0A`;
+            message += `*RESUMEN:*%0A`;
+            message += `Subtotal: ${subtotal.toFixed(2)}%0A`;
+            
+            if (discount > 0 && promoCodeApplied) {
+                message += `Código usado: *${promoCodeApplied}*%0A`;
+                message += `Descuento (${discount}%): -${discountAmount.toFixed(2)}%0A`;
+            }
+            
+            message += `%0A*TOTAL A PAGAR: ${total.toFixed(2)}*`;
+            
+            const whatsappUrl = `https://wa.me/529831253262?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Inicializar
+        renderProducts();
+    </script>
+</body>
+</html>
